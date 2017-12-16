@@ -1,0 +1,189 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RABBITHOLE__SPRINGREST",
+		"_postman_id": "35200e63-c263-397c-da71-dcc8985fd33c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get links (HATEOAS)",
+			"request": {
+				"url": "http://localhost:8080/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"200 OK\"] = responseCode.code === 200;",
+							"",
+							"// if( tests[\"200 OK\"] ) {",
+							"//     var data = JSON.parse(responseBody);",
+							"//     do something...",
+							"// }",
+							"",
+							"// Check response header",
+							"pm.test(\"Content-Type is present\", ",
+							"    function () {",
+							"        pm.response.to.have.header(\"Content-Type\");",
+							"    });",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"201 CREATED\"] = responseCode.code === 201;",
+							"",
+							"// PLEASE NOTE: the getResponseHeader() method returns the header value, if it exists.",
+							"tests[\"Location is present\"] = postman.getResponseHeader(\"Location\");",
+							"",
+							"if( tests[\"201 CREATED\"] ",
+							"    && tests[\"Location is present\"] ) {",
+							"    ",
+							"    pm.globals.set(\"getUserUrl\", postman.getResponseHeader(\"Location\"));",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Test\",\n\t\"email\" : \"test@test.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"200 OK\"] = responseCode.code === 200;",
+							"",
+							"// if( tests[\"200 OK\"] ) {",
+							"//     var data = JSON.parse(responseBody);",
+							"//     do something...",
+							"// }",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{getUserUrl}}",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Search users by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"200 OK\"] = responseCode.code === 200;",
+							"",
+							"// if( tests[\"200 OK\"] ) {",
+							"//     var data = JSON.parse(responseBody);",
+							"//     do something...",
+							"// }",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.globals.set(\"queryName\", \"Test\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/users/search/findByName?name={{queryName}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"search",
+						"findByName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{queryName}}",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

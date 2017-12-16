@@ -1,0 +1,29 @@
+
+---[ RH - SpringRest - Links ]---
+
+
+---[ Theory
+
+DONE
+http://www.baeldung.com/spring-data-rest-intro
+
+IN PROGRESS
+-
+
+TODO
+-
+
+
+---[ Frameworks/Platforms
+
+-
+
+
+---[ Code
+
+https://stackoverflow.com/questions/18099127/java-entity-why-do-i-need-an-empty-constructor
+
+
+---[ Repo
+
+https://github.com/eugenp/tutorials/tree/master/spring-data-rest
